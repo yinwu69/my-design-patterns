@@ -1,10 +1,30 @@
 package build;
 
+
 public class NormalFactoryMethod {
 	public static void main(String[] args) {
+		/**
+		 * 普通工厂模式，
+		 * 建立一个工厂类，对实现了同一接口的一些类进行实例的创建。
+		 */
 		SaasFactory factory = new SaasFactory();
 		SaaS saas = factory.saasProduce(WinhongSaaS.class.getSimpleName());
 		saas.saasService("saas service!");
+		
+		/**
+		 * 多个工厂方法模式
+		 * 对普通工厂方法模式的改进，在普通工厂方法模式中，如果传递的字符串出错，
+		 * 则不能正确创建对象，而多个工厂方法模式是提供多个工厂方法，分别创建对象
+		 */
+		ManySaasFactory saasFactory = new ManySaasFactory();
+		SaaS huaweiSaas = saasFactory.produceHaweiSaas();
+		huaweiSaas.saasService("huawei service");
+		
+		/**
+		 * 将多个工厂方法模式里的方法置为静态的，不需要创建实例
+		 */
+		SaaS aliYun = StaticSaasFacory.produceAliYun();
+		aliYun.saasService("aliYun service...");
 	}
 }
 
@@ -27,6 +47,13 @@ class HaweiSaaS implements SaaS{
 	}
 }
 
+class AliYun implements SaaS{
+	@Override
+	public void saasService(String arg) {
+		System.out.println("Ali yun:" + arg);
+	}
+}
+
 class SaasFactory {
 	public SaaS saasProduce(String saas) {
 		if(saas.equals("WinhongSaaS")) {
@@ -36,5 +63,29 @@ class SaasFactory {
 		} else {
 			return null;
 		}
+	}
+}
+
+class ManySaasFactory {
+	public SaaS produceWinhongSaas() {
+		return new WinhongSaaS();
+	}
+	
+	public SaaS produceHaweiSaas() {
+		return new HaweiSaaS();
+	}
+}
+
+class StaticSaasFacory {
+	public static SaaS produceWinhongSaas() {
+		return new WinhongSaaS();
+	}
+	
+	public static SaaS produceHaweiSaas() {
+		return new HaweiSaaS();
+	}
+	
+	public static SaaS produceAliYun() {
+		return new AliYun();
 	}
 }
