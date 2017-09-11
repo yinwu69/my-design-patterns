@@ -16,14 +16,14 @@ public class NormalFactoryMethod {
 		 * 对普通工厂方法模式的改进，在普通工厂方法模式中，如果传递的字符串出错，
 		 * 则不能正确创建对象，而多个工厂方法模式是提供多个工厂方法，分别创建对象
 		 */
-		ManySaasFactory saasFactory = new ManySaasFactory();
+		SaasFactoryEx saasFactory = new SaasFactoryEx();
 		SaaS huaweiSaas = saasFactory.produceHaweiSaas();
 		huaweiSaas.saasService("huawei service");
 		
 		/**
 		 * 将多个工厂方法模式里的方法置为静态的，不需要创建实例
 		 */
-		SaaS aliYun = StaticSaasFacory.produceAliYun();
+		SaaS aliYun = SaasFacory4Static.produceAliYun();
 		aliYun.saasService("aliYun service...");
 	}
 }
@@ -66,7 +66,7 @@ class SaasFactory {
 	}
 }
 
-class ManySaasFactory {
+class SaasFactoryEx {
 	public SaaS produceWinhongSaas() {
 		return new WinhongSaaS();
 	}
@@ -76,7 +76,7 @@ class ManySaasFactory {
 	}
 }
 
-class StaticSaasFacory {
+class SaasFacory4Static {
 	public static SaaS produceWinhongSaas() {
 		return new WinhongSaaS();
 	}
